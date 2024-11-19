@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lifepulse/states/notifications.dart';
 import 'package:lifepulse/states/quests.dart';
 import 'package:lifepulse/states/badges.dart';
+import 'package:lifepulse/splash_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -31,6 +32,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('LifePulse'),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const SplashScreen()),
+            );
+          },
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
