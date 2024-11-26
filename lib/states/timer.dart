@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class Notifications extends StatefulWidget {
-  const Notifications({super.key});
+class Timers extends StatefulWidget {
+  const Timers({super.key});
 
   @override
   _NotificationsState createState() => _NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _NotificationsState extends State<Timers> {
   late Timer _timer;
   int _start = 10;
   bool _isRunning = false;
@@ -53,7 +53,7 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: const Text('Timer'),
       ),
       body: Center(
         child: Card(
