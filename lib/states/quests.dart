@@ -6,8 +6,7 @@ class Quests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: const ExpansionTileExample(),
     );
   }
@@ -22,19 +21,25 @@ class ExpansionTileExample extends StatefulWidget {
 
 class _ExpansionTileExampleState extends State<ExpansionTileExample> {
   final List<Map<String, dynamic>> _quests = [
-    {'title': 'Quest 1', 'subtitle': '1-week streak', 'description': 'Complete the 30 minute timer 7 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30},
-    {'title': 'Quest 2', 'subtitle': '2-week streak', 'description': 'Complete 10 exercises in two weeks!', 'icon': Icons.fitness_center, 'group': 'Streak', 'hearts': 40},
-    {'title': 'Quest 3', 'subtitle': 'Daily meditation', 'description': 'Meditate for 10 minutes each day for a week.', 'icon': Icons.self_improvement, 'group': 'Friends', 'hearts': 20},
-    {'title': 'Quest 4', 'subtitle': 'Healthy diet', 'description': 'Eat at least 5 servings of vegetables daily for a week.', 'icon': Icons.restaurant, 'group': 'Health', 'hearts': 25},
-    {'title': 'Quest 5', 'subtitle': 'Hydration goal', 'description': 'Drink 8 glasses of water every day for a week.', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 15},
-    {'title': 'Quest 6', 'subtitle': 'Reading challenge', 'description': 'Read for at least 20 minutes each day for a week.', 'icon': Icons.book, 'group': 'Friends', 'hearts': 20},
-    {'title': 'Quest 7', 'subtitle': 'Outdoor activity', 'description': 'Spend 30 minutes outside every day for a week.', 'icon': Icons.nature, 'group': 'Health', 'hearts': 30},
-    {'title': 'Quest 8', 'subtitle': 'Sleep goal', 'description': 'Get at least 7 hours of sleep every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 35},
-    {'title': 'Quest 9', 'subtitle': 'Digital detox', 'description': 'Limit screen time to 2 hours daily for a week.', 'icon': Icons.phonelink_erase, 'group': 'Health', 'hearts': 25},
-    {'title': 'Quest 10', 'subtitle': 'Gratitude journal', 'description': 'Write down three things you are grateful for each day for a week.', 'icon': Icons.favorite, 'group': 'Friends', 'hearts': 20},
-    {'title': 'Quest 11', 'subtitle': 'Workout buddy', 'description': 'Exercise with a friend three times a week for a month.', 'icon': Icons.group, 'group': 'Friends', 'hearts': 50},
-    {'title': 'Quest 12', 'subtitle': 'Weekly meetup', 'description': 'Catch up with a friend over coffee once a week for a month.', 'icon': Icons.coffee, 'group': 'Friends', 'hearts': 30},
-    {'title': 'Quest 13', 'subtitle': 'Mindfulness practice', 'description': 'Practice mindfulness meditation for 15 minutes daily for two weeks.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 40},
+    // Streak group - increasing streak goals
+    {'title': 'Quest 1', 'subtitle': '1-week streak', 'description': 'Complete the 30-minute timer 7 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30},
+    {'title': 'Quest 2', 'subtitle': '2-week streak', 'description': 'Complete 10 exercises in two weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40},
+    {'title': 'Quest 3', 'subtitle': '3-week streak', 'description': 'Complete 15 exercises in three weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50},
+    {'title': 'Quest 4', 'subtitle': '4-week streak', 'description': 'Complete 20 exercises in four weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60},
+    {'title': 'Quest 5', 'subtitle': '5-week streak', 'description': 'Complete 25 exercises in five weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70},
+
+    // Friends group - increasing friends goals
+    {'title': 'Quest 1', 'subtitle': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10},
+    {'title': 'Quest 2', 'subtitle': '4 Friends', 'description': 'Add 4 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20},
+    {'title': 'Quest 3', 'subtitle': '10 Friends', 'description': 'Add 10 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30},
+    {'title': 'Quest 4', 'subtitle': '15 Friends', 'description': 'Add 15 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 40},
+    {'title': 'Quest 5', 'subtitle': '20 Friends', 'description': 'Add 20 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 50},
+
+    // Health group - New health-related quests
+    {'title': 'Quest 1', 'subtitle': 'Hydration Goal', 'description': 'Drink 8 glasses of water every day for a week!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 20},
+    {'title': 'Quest 2', 'subtitle': 'Outdoor Exercise', 'description': 'Exercise outdoors for at least 30 minutes every day for a week.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 25},
+    {'title': 'Quest 3', 'subtitle': 'Mindfulness Meditation', 'description': 'Practice mindfulness meditation for 15 minutes every day for a week.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 30},
+    {'title': 'Quest 4', 'subtitle': 'Sleep Goal', 'description': 'Sleep at least 7 hours every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 35},
   ];
 
   final Map<String, Color> _groupColors = {
@@ -43,41 +48,99 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
     'Health': Colors.orange,
   };
 
-  void _markAsDone(int index) {
+  int streakCountDays = 28; // Streak count in days
+  int friendsCount = 10; // Friend count
+
+  @override
+  void initState() {
+    super.initState();
+    _validateQuests();
+  }
+
+  void _validateQuests() {
+    for (var quest in _quests) {
+      assert(quest['title'] != null && quest['subtitle'] != null, 'Quest is missing title or subtitle');
+      assert(quest['group'] != null, 'Quest is missing group');
+      assert(quest['hearts'] is int, 'Quest hearts should be an integer');
+      quest['completed'] ??= false; // Ensure the completed key exists
+    }
+  }
+
+  bool _isQuestAutomaticallyCompleted(Map<String, dynamic> quest) {
+    try {
+      if (quest['group'] == 'Streak') {
+        int streakWeeks = int.parse(quest['subtitle']!.split('-')[0]);
+        return streakCountDays >= (streakWeeks * 7);
+      } else if (quest['group'] == 'Friends') {
+        int friendsRequired = int.parse(quest['subtitle']!.split(' ')[0]);
+        return friendsCount >= friendsRequired;
+      }
+    } catch (e) {
+      debugPrint('Error in _isQuestAutomaticallyCompleted: $e');
+    }
+    return false;
+  }
+
+  void _markAsDone(Map<String, dynamic> quest) {
     setState(() {
-      _quests.removeAt(index);
+      quest['completed'] = true;
     });
   }
 
-  void _showConfirmationDialog(BuildContext context, int index) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Done"),
-        content: const Text("You have marked this quest as done!"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              "Undo",
-              style: TextStyle(fontSize: 12),
+  void _undoMarkAsDone(Map<String, dynamic> quest) {
+    setState(() {
+      quest['completed'] = false;
+    });
+  }
+
+  void _handleDoneButton(BuildContext context, Map<String, dynamic> quest) {
+    if (_isQuestAutomaticallyCompleted(quest)) {
+      // Show a dialog informing the user
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Quest Automatically Tracked"),
+          content: const Text("This quest is automatically tracked and cannot be marked manually."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _markAsDone(index);
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              "OK",
-              style: TextStyle(fontSize: 18),
+          ],
+        ),
+      );
+    } else {
+      // Show confirmation dialog before marking as completed
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Confirm Completion"),
+          content: const Text("Are you sure you want to mark this quest as completed?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("No"),
             ),
-          ),
-        ],
-      ),
-    );
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _markAsDone(quest);
+                },
+                child: const Text(
+                  "Yes",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -104,22 +167,26 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
             ),
             Column(
               children: groupedQuests[group]!.map((quest) {
-                final index = _quests.indexOf(quest);
-                return _buildQuestTile(quest, index, _groupColors[group]!);
+                return _buildQuestTile(quest, _groupColors[group]!);
               }).toList(),
-            )
+            ),
           ],
         );
       }).toList(),
     );
   }
 
-  Widget _buildQuestTile(Map<String, dynamic> quest, int index, Color color) {
+  Widget _buildQuestTile(Map<String, dynamic> quest, Color color) {
+    bool isAutomaticallyCompleted = _isQuestAutomaticallyCompleted(quest);
+    bool isManuallyCompleted = quest['completed'] ?? false;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: (isAutomaticallyCompleted || isManuallyCompleted)
+            ? Colors.grey.withOpacity(0.4)
+            : color.withOpacity(0.2),
         border: Border.all(color: Colors.blueGrey),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
@@ -135,9 +202,7 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
               title: Text(quest['title']!),
               subtitle: Text(quest['subtitle']!),
               controlAffinity: ListTileControlAffinity.leading,
-              children: <Widget>[
-                ListTile(title: Text(quest['description']!)),
-              ],
+              children: <Widget>[ListTile(title: Text(quest['description']!))],
             ),
           ),
           Padding(
@@ -156,22 +221,21 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-              border: Border.all(color: Colors.black),
-            ),
-            child: IconButton(
-              icon: const Icon(
-                Icons.done,
-                size: 24,
+          if (quest['group'] == 'Health' && !isAutomaticallyCompleted && !isManuallyCompleted)
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+                border: Border.all(color: Colors.black),
               ),
-              onPressed: () {
-                _showConfirmationDialog(context, index);
-              },
+              child: IconButton(
+                icon: const Icon(
+                  Icons.done,
+                  size: 24,
+                ),
+                onPressed: () => _handleDoneButton(context, quest),
+              ),
             ),
-          ),
         ],
       ),
     );
