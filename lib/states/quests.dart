@@ -22,24 +22,24 @@ class ExpansionTileExample extends StatefulWidget {
 class _ExpansionTileExampleState extends State<ExpansionTileExample> {
   final List<Map<String, dynamic>> _quests = [
     // Streak group - increasing streak goals
-    {'title': 'Quest 1', 'subtitle': '1-week streak', 'description': 'Complete the 30-minute timer 7 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30},
-    {'title': 'Quest 2', 'subtitle': '2-week streak', 'description': 'Complete 10 exercises in two weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40},
-    {'title': 'Quest 3', 'subtitle': '3-week streak', 'description': 'Complete 15 exercises in three weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50},
-    {'title': 'Quest 4', 'subtitle': '4-week streak', 'description': 'Complete 20 exercises in four weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60},
-    {'title': 'Quest 5', 'subtitle': '5-week streak', 'description': 'Complete 25 exercises in five weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70},
+    {'title': '1-week streak', 'description': 'Complete the 30-minute timer 7 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30},
+    {'title': '2-week streak', 'description': 'Complete 10 exercises in two weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40},
+    {'title': '3-week streak', 'description': 'Complete 15 exercises in three weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50},
+    {'title': '4-week streak', 'description': 'Complete 20 exercises in four weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60},
+    {'title': '5-week streak', 'description': 'Complete 25 exercises in five weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70},
 
     // Friends group - increasing friends goals
-    {'title': 'Quest 1', 'subtitle': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10},
-    {'title': 'Quest 2', 'subtitle': '4 Friends', 'description': 'Add 4 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20},
-    {'title': 'Quest 3', 'subtitle': '10 Friends', 'description': 'Add 10 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30},
-    {'title': 'Quest 4', 'subtitle': '15 Friends', 'description': 'Add 15 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 40},
-    {'title': 'Quest 5', 'subtitle': '20 Friends', 'description': 'Add 20 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 50},
+    {'title': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10},
+    {'title': '4 Friends', 'description': 'Add 4 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20},
+    {'title': '10 Friends', 'description': 'Add 10 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30},
+    {'title': '15 Friends', 'description': 'Add 15 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 40},
+    {'title': '20 Friends', 'description': 'Add 20 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 50},
 
     // Health group - New health-related quests
-    {'title': 'Quest 1', 'subtitle': 'Hydration Goal', 'description': 'Drink 8 glasses of water every day for a week!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 20},
-    {'title': 'Quest 2', 'subtitle': 'Outdoor Exercise', 'description': 'Exercise outdoors for at least 30 minutes every day for a week.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 25},
-    {'title': 'Quest 3', 'subtitle': 'Mindfulness Meditation', 'description': 'Practice mindfulness meditation for 15 minutes every day for a week.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 30},
-    {'title': 'Quest 4', 'subtitle': 'Sleep Goal', 'description': 'Sleep at least 7 hours every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 35},
+    {'title': 'Hydration Goal', 'description': 'Drink 8 glasses of water every day for a week!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 20},
+    {'title': 'Outdoor Exercise', 'description': 'Exercise outdoors for at least 30 minutes every day for a week.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 25},
+    {'title': 'Mindfulness Meditation', 'description': 'Practice mindfulness meditation for 15 minutes every day for a week.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 30},
+    {'title': 'Sleep Goal', 'description': 'Sleep at least 7 hours every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 35},
   ];
 
   final Map<String, Color> _groupColors = {
@@ -59,7 +59,7 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
 
   void _validateQuests() {
     for (var quest in _quests) {
-      assert(quest['title'] != null && quest['subtitle'] != null, 'Quest is missing title or subtitle');
+      assert(quest['title'] != null, 'Quest is missing title');
       assert(quest['group'] != null, 'Quest is missing group');
       assert(quest['hearts'] is int, 'Quest hearts should be an integer');
       quest['completed'] ??= false; // Ensure the completed key exists
@@ -69,10 +69,10 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
   bool _isQuestAutomaticallyCompleted(Map<String, dynamic> quest) {
     try {
       if (quest['group'] == 'Streak') {
-        int streakWeeks = int.parse(quest['subtitle']!.split('-')[0]);
+        int streakWeeks = int.parse(quest['title']!.split('-')[0]);
         return streakCountDays >= (streakWeeks * 7);
       } else if (quest['group'] == 'Friends') {
-        int friendsRequired = int.parse(quest['subtitle']!.split(' ')[0]);
+        int friendsRequired = int.parse(quest['title']!.split(' ')[0]);
         return friendsCount >= friendsRequired;
       }
     } catch (e) {
@@ -200,7 +200,6 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
             child: ExpansionTile(
               shape: const RoundedRectangleBorder(),
               title: Text(quest['title']!),
-              subtitle: Text(quest['subtitle']!),
               controlAffinity: ListTileControlAffinity.leading,
               children: <Widget>[ListTile(title: Text(quest['description']!))],
             ),
@@ -211,11 +210,15 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
               children: [
                 Text(
                   '${quest['hearts']}',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: (isAutomaticallyCompleted || isManuallyCompleted) ? Colors.grey : Colors.black,
+                  ),
                 ),
-                const Icon(
+                Icon(
                   Icons.favorite,
-                  color: Colors.red,
+                  color: (isAutomaticallyCompleted || isManuallyCompleted) ? Colors.grey : Colors.red,
                   size: 18,
                 ),
               ],
@@ -241,3 +244,4 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
     );
   }
 }
+
