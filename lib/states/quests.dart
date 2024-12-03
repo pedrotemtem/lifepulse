@@ -23,10 +23,10 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
   final List<Map<String, dynamic>> _quests = [
     // Streak group - increasing streak goals
     {'title': '1-week streak', 'description': 'Complete the 30-minute timer 7 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30},
-    {'title': '2-week streak', 'description': 'Complete 10 exercises in two weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40},
-    {'title': '3-week streak', 'description': 'Complete 15 exercises in three weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50},
-    {'title': '4-week streak', 'description': 'Complete 20 exercises in four weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60},
-    {'title': '5-week streak', 'description': 'Complete 25 exercises in five weeks!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70},
+    {'title': '2-week streak', 'description': 'Complete the 30-minute timer 2 weeks in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40},
+    {'title': '3-week streak', 'description': 'Complete the 30-minute timer 3 weeks in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50},
+    {'title': '4-week streak', 'description': 'Complete the 30-minute timer 4 weeks in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60},
+    {'title': '5-week streak', 'description': 'Complete the 30-minute timer 5 weeks in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70},
 
     // Friends group - increasing friends goals
     {'title': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10},
