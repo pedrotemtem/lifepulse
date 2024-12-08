@@ -4,7 +4,6 @@ import 'package:lifepulse/splash_screen.dart';
 
 
 void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
   AwesomeNotifications().initialize(
     "resource://drawable/noimage",
     [
