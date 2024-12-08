@@ -1,9 +1,6 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});
@@ -21,48 +18,31 @@ class _NotificationsState extends State<Notifications> {
   @override
   void initState() {
     super.initState();
-    tz.initializeTimeZones();
+    requestNotificationPermissions();
   }
 
-  void _initializeNotifications() async {
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
-
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  void requestNotificationPermissions() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 
   void scheduleNotification() async {
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'channel_id',
-      'channel_name',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: 'basic_channel',
+        title: 'Test Notification',
+        body: 'This is a test notification',
+      ),
+      schedule: NotificationInterval(
+          interval: const Duration(seconds: 5),
+          timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+          repeats: false,
+      ),
     );
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'Time to do push-ups!',
-      'Don\'t forget to do your daily push-ups.',
-      _nextInstanceOfTenAM(),
-      platformChannelSpecifics,
-      matchDateTimeComponents: DateTimeComponents.time,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.wallClockTime,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    );
-  }
-
-  tz.TZDateTime _nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
   }
 
   void startTimer() {
@@ -103,28 +83,6 @@ class _NotificationsState extends State<Notifications> {
           ],
         );
       },
-    );
-  }
-
-  void scheduleTestNotification() async {
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'test_channel_id',
-      'test_channel_name',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
-    );
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'Test Notification',
-      'This is a test notification.',
-      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-      platformChannelSpecifics,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.wallClockTime,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 
@@ -191,8 +149,8 @@ class _NotificationsState extends State<Notifications> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: scheduleTestNotification,
-                  child: const Text('Schedule Test Notification'),
+                  onPressed: scheduleNotification,
+                  child: Text('Schedule Test Notification'),
                 ),
               ],
             ),
