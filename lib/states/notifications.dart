@@ -149,6 +149,13 @@ class _NotificationsState extends State<Notifications> {
                       final TimeOfDay? picked = await showTimePicker(
                         context: context,
                         initialTime: tempSelectedTime,
+                        initialEntryMode: TimePickerEntryMode.dialOnly,
+                        builder: (BuildContext context, Widget? child) {
+                          return MediaQuery(
+                            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                            child: child ?? Container(),
+                          );
+                        },
                       );
                       if (picked != null) {
                         setState(() {
