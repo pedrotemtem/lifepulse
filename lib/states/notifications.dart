@@ -185,6 +185,12 @@ class _NotificationsState extends State<Notifications> {
               ),
               actions: <Widget>[
                 TextButton(
+                  child: const Text('Close'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
                   child: const Text('Save'),
                   onPressed: () {
                     setState(() {
@@ -192,12 +198,6 @@ class _NotificationsState extends State<Notifications> {
                       _selectedWeekdays = tempSelectedWeekdays;
                     });
                     scheduleWeeklyNotification(_selectedTime.hour, _selectedTime.minute, _selectedWeekdays);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: const Text('Close'),
-                  onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
