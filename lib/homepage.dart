@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lifepulse/states/notifications.dart';
+import 'package:lifepulse/states/timer.dart';
 import 'package:lifepulse/states/quests.dart';
-import 'package:lifepulse/states/badges.dart';
+import 'package:lifepulse/states/leaderboard.dart';
 import 'package:lifepulse/splash_screen.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,9 +15,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Notifications(),
+    Timer(),
     Quests(),
-    Badges(),
+    Leaderboard(),
   ];
 
   void _onItemTapped(int index) {
@@ -56,16 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            icon: Icon(Icons.timer),
+            label: 'Timer',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Quests',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.badge),
-            label: 'Badges',
+            icon: Icon(Icons.leaderboard),
+            label: 'Leaderboard',
           ),
         ],
         currentIndex: _selectedIndex,

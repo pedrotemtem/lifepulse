@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:intl/intl.dart';
 
-class Notifications extends StatefulWidget {
-  const Notifications({super.key});
+class Timer extends StatefulWidget {
+  const Timer({super.key});
 
   @override
-  _NotificationsState createState() => _NotificationsState();
+  _TimerState createState() => _TimerState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _TimerState extends State<Timer> {
   TimeOfDay _selectedTime = TimeOfDay(hour: 8, minute: 0);
   List<int> _selectedWeekdays = [];
   final CountDownController _controller = CountDownController();

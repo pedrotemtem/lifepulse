@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Badges extends StatelessWidget {
-  const Badges({super.key});
+class Leaderboard extends StatelessWidget {
+  const Leaderboard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Badges'),
+        title: const Text('Leaderboard'),
       ),
       body: const Center(
-        child: Text('This is Badges'),
+        child: Text('This is the Leaderboard'),
       ),
     );
   }
