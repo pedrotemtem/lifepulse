@@ -13,7 +13,6 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   TimeOfDay _selectedTime = TimeOfDay(hour: 8, minute: 0);
   List<int> _selectedWeekdays = [];
-  bool _isFilterChipSelected = false;
 
   @override
   void initState() {
@@ -55,7 +54,6 @@ class _NotificationsState extends State<Notifications> {
     AwesomeNotifications().cancelAll();
     setState(() {
       _selectedWeekdays.clear();
-      _isFilterChipSelected = false;
     });
   }
 
@@ -172,7 +170,6 @@ class _NotificationsState extends State<Notifications> {
                   onChanged: (weekdays) {
                     setState(() {
                       _selectedWeekdays = weekdays;
-                      _isFilterChipSelected = weekdays.isNotEmpty;
                     });
                   },
                 ),
@@ -180,7 +177,7 @@ class _NotificationsState extends State<Notifications> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[100],
-                    minimumSize: Size(320, 50),
+                    minimumSize: const Size(320, 50),
                   ),
                   onPressed: () {
                     scheduleWeeklyNotification(_selectedTime.hour, _selectedTime.minute, _selectedWeekdays);
