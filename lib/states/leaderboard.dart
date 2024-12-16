@@ -20,7 +20,7 @@ class Leaderboard extends StatelessWidget {
     ];
 
     // ID of the current user (can be dynamic)
-    final int currentUserId = 5; // Maria will be highlighted
+    final int currentUserId = 7; // Maria will be highlighted
 
     return Scaffold(
       appBar: AppBar(
