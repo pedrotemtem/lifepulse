@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lifepulse/states/notifications.dart';
 import 'package:lifepulse/states/timer.dart';
 import 'package:lifepulse/states/quests.dart';
 import 'package:lifepulse/states/leaderboard.dart';
@@ -15,6 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
+    Notifications(),
     Timer(),
     Quests(),
     Leaderboard(),
@@ -56,6 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.timer),
             label: 'Timer',
           ),
@@ -70,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.grey[800],
         onTap: _onItemTapped,
       ),
     );
