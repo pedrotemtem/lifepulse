@@ -10,9 +10,9 @@ class Timer extends StatefulWidget {
 
 class _TimerState extends State<Timer> {
   final CountDownController _controller = CountDownController();
-  bool _isRunning = false;
-  final int _seconds = 15;
+  final int _seconds = 30;
   final int _minutes = 0;
+  bool _isPaused = false;
 
   @override
   void initState() {
@@ -21,22 +21,26 @@ class _TimerState extends State<Timer> {
 
   void startTimer() {
     setState(() {
-      _isRunning = true;
-      _controller.start();
+      if (_isPaused) {
+        _controller.resume();
+      } else {
+        _controller.start();
+      }
+      _isPaused = false;
     });
   }
 
   void stopTimer() {
     setState(() {
-      _isRunning = false;
       _controller.pause();
+      _isPaused = true;
     });
   }
 
   void resetTimer() {
     setState(() {
-      _isRunning = false;
       _controller.reset();
+      _isPaused = false;
     });
   }
 
@@ -45,8 +49,50 @@ class _TimerState extends State<Timer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Timer Completed'),
-          content: const Text('The countdown timer has finished.'),
+          title: const Text(
+              'Congratulations!',
+              style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold
+              ),
+          ),
+          content:const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'You have completed today\'s training!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18.0),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'You have gained:',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18.0),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '30',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 26.0,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                    size: 40.0,
+                  ),
+                ],
+              ),
+            ],
+          ),
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
@@ -60,71 +106,148 @@ class _TimerState extends State<Timer> {
     );
   }
 
+  void _showStopTrainingDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Stop Workout?'),
+            content: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Are you sure you want to stop the training?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'You will not gain any hearts!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ],
+            ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _controller.resume();
+              },
+            ),
+            TextButton(
+              child: const Text('Stop'),
+              onPressed: () {
+                resetTimer();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Timer'),
-      ),
-      body: Center(
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularCountDownTimer(
-                  duration: _minutes * 60 + _seconds,
-                  initialDuration: 0,
-                  controller: _controller,
-                  width: 150,
-                  height: 150,
-                  ringColor: Colors.grey[300]!,
-                  ringGradient: null,
-                  fillColor: Colors.purpleAccent,
-                  fillGradient: null,
-                  backgroundColor: Colors.purple[100],
-                  backgroundGradient: null,
-                  strokeWidth: 20.0,
-                  strokeCap: StrokeCap.round,
-                  textStyle: const TextStyle(
-                      fontSize: 33.0, color: Colors.black, fontWeight: FontWeight.bold),
-                  textFormat: CountdownTextFormat.MM_SS,
-                  isReverse: true,
-                  isReverseAnimation: true,
-                  isTimerTextShown: true,
-                  autoStart: false,
-                  onStart: () {
-                    print('Countdown Started');
-                  },
-                  onComplete: () {
-                    print('Countdown Ended');
-                    _showCompletionDialog();
-                  },
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: startTimer,
-                  child: const Text('Start Timer'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: stopTimer,
-                  child: const Text('Stop Timer'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: resetTimer,
-                  child: const Text('Reset Timer'),
-                ),
-              ],
+        title: Container(
+          width: double.infinity,
+          color: Colors.lightBlue[200],
+          padding: const EdgeInsets.all(16.0),
+          child: const Text(
+            'Train Alone',
+            style: TextStyle(
+              fontSize: 24.0,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularCountDownTimer(
+                    duration: _minutes * 60 + _seconds,
+                    initialDuration: _minutes * 60 + _seconds,
+                    controller: _controller,
+                    width: 200,
+                    height: 200,
+                    ringColor: Colors.blueGrey,
+                    ringGradient: null,
+                    fillColor: Colors.blue[600]!,
+                    fillGradient: null,
+                    backgroundColor: Colors.blue[100],
+                    backgroundGradient: null,
+                    strokeWidth: 60.0,
+                    strokeCap: StrokeCap.round,
+                    textStyle: const TextStyle(
+                        fontSize: 50.0, color: Colors.black, fontWeight: FontWeight.bold),
+                    textFormat: CountdownTextFormat.MM_SS,
+                    isReverse: true,
+                    isReverseAnimation: true,
+                    isTimerTextShown: true,
+                    autoStart: false,
+                    onStart: () {
+                      print('Countdown Started');
+                    },
+                    onComplete: () {
+                      print('Countdown Ended');
+                      _showCompletionDialog();
+                    },
+                  ),
+                  const SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        iconSize: 48,
+                        icon: const Icon(Icons.play_arrow),
+                        onPressed: startTimer,
+                      ),
+                      IconButton(
+                        iconSize: 48,
+                        icon: const Icon(Icons.pause),
+                        onPressed: stopTimer,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton.icon(
+              icon: Icon(Icons.stop, size: 48, color: Colors.grey[700],),
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size.fromWidth(260),
+                backgroundColor: Colors.grey[300],
+              ),
+              onPressed: () {
+                _controller.pause();
+                _showStopTrainingDialog();
+              },
+              label:
+                Text(
+                  'Stop training',
+                  style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.grey[800]!,
+                  )
+                ),
+            ),
+          ),
+        ],
       ),
     );
   }
