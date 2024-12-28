@@ -17,13 +17,47 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
 
-  static List<Widget> _widgetOptions(PageController pageController) => <Widget>[
+  List<Map<String, dynamic>> leaderboardData = [
+    {'id': 1, 'name': 'João', 'score': 200},
+    {'id': 2, 'name': 'Ana', 'score': 180},
+    {'id': 3, 'name': 'Carlos', 'score': 160},
+    {'id': 4, 'name': 'Maria', 'score': 150},
+    {'id': 5, 'name': 'Rui', 'score': 140},
+    {'id': 6, 'name': 'Sofia', 'score': 130},
+    {'id': 7, 'name': 'Miguel', 'score': 120},
+    {'id': 8, 'name': 'Inês', 'score': 110},
+    {'id': 9, 'name': 'Pedro', 'score': 100},
+    {'id': 10, 'name': 'Carla', 'score': 90},
+  ];
+  void updateUserScore(int userId, int points) {
+    setState(() {
+      for (var player in leaderboardData) {
+        if (player['id'] == userId) {
+          player['score'] += points;
+          break;
+        }
+      }
+      leaderboardData.sort((a, b) => b['score'].compareTo(a['score']));
+    });
+  }
+
+  static List<Widget> _widgetOptions(
+      PageController pageController,
+      List<Map<String, dynamic>> leaderboardData,
+      Function(int, int) updateUserScore) => <Widget>[
     const Notifications(),
     TrainingSelection(pageController: pageController),
     const Quests(),
-    const Leaderboard(),
-    const Timer(),
+    Leaderboard(
+        currentUserId: 9,
+        leaderboardData: leaderboardData,
+        updateUserScore: updateUserScore
+    ),
+    Timer(onTrainingComplete: (int points){
+      updateUserScore(9, points);
+    }),
   ];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: PageView(
           controller: _pageController,
-          children: _widgetOptions(_pageController),
+          children: _widgetOptions(_pageController, leaderboardData, updateUserScore),
           onPageChanged: (int index) {
             if (index < 3) {
               setState(() {
