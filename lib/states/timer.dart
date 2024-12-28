@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
 class Timer extends StatefulWidget {
-  const Timer({super.key});
+  final Function(int) onTrainingComplete;
+  const Timer({required this.onTrainingComplete, super.key});
 
   @override
   _TimerState createState() => _TimerState();
@@ -10,7 +11,7 @@ class Timer extends StatefulWidget {
 
 class _TimerState extends State<Timer> {
   final CountDownController _controller = CountDownController();
-  final int _seconds = 30;
+  final int _seconds = 5;
   final int _minutes = 0;
   bool _isPaused = false;
 
@@ -98,6 +99,7 @@ class _TimerState extends State<Timer> {
               child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
+                widget.onTrainingComplete(30);
               },
             ),
           ],
@@ -178,7 +180,7 @@ class _TimerState extends State<Timer> {
                 children: [
                   CircularCountDownTimer(
                     duration: _minutes * 60 + _seconds,
-                    initialDuration: _minutes * 60 + _seconds,
+                    initialDuration: 0,
                     controller: _controller,
                     width: 200,
                     height: 200,

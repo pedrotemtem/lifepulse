@@ -1,68 +1,64 @@
 import 'package:flutter/material.dart';
 
-class Leaderboard extends StatelessWidget {
-  const Leaderboard({super.key});
+class Leaderboard extends StatefulWidget {
+  final int currentUserId;
+  final List<Map<String, dynamic>> leaderboardData;
+  final Function(int, int) updateUserScore;
+
+  const Leaderboard({
+    required this.currentUserId,
+    required this.leaderboardData,
+    required this.updateUserScore,
+    super.key,
+  });
+
+  @override
+  _LeaderboardState createState() => _LeaderboardState();
+}
+
+class _LeaderboardState extends State<Leaderboard> {
 
   @override
   Widget build(BuildContext context) {
-    // Simulated leaderboard data with Portuguese names
-    final List<Map<String, dynamic>> leaderboardData = [
-      {'id': 1, 'name': 'João', 'score': 200},
-      {'id': 2, 'name': 'Ana', 'score': 180},
-      {'id': 3, 'name': 'Carlos', 'score': 160},
-      {'id': 4, 'name': 'Maria', 'score': 150},
-      {'id': 5, 'name': 'Rui', 'score': 140},
-      {'id': 6, 'name': 'Sofia', 'score': 130},
-      {'id': 7, 'name': 'Miguel', 'score': 120},
-      {'id': 8, 'name': 'Inês', 'score': 110},
-      {'id': 9, 'name': 'Pedro', 'score': 100},
-      {'id': 10, 'name': 'Carla', 'score': 90},
-    ];
-
-    // ID of the current user (can be dynamic)
-    final int currentUserId = 7; // Maria will be highlighted
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Leaderboard'),
       ),
       body: ListView.builder(
-        itemCount: leaderboardData.length,
+        itemCount: widget.leaderboardData.length,
         itemBuilder: (context, index) {
-          final player = leaderboardData[index];
-          final bool isCurrentUser = player['id'] == currentUserId;
+          final player = widget.leaderboardData[index];
+          final bool isCurrentUser = player['id'] == widget.currentUserId;
 
-          // Determine the medal icon based on the rank
           Widget medalIcon;
           if (index == 0) {
-            medalIcon = const Icon(Icons.star, color: Colors.amber); // Gold medal
+            medalIcon = const Icon(Icons.star, color: Colors.amber);
           } else if (index == 1) {
-            medalIcon = const Icon(Icons.star, color: Colors.grey); // Silver medal
+            medalIcon = const Icon(Icons.star, color: Colors.grey);
           } else if (index == 2) {
-            medalIcon = const Icon(Icons.star, color: Colors.brown); // Bronze medal
+            medalIcon = const Icon(Icons.star, color: Colors.brown);
           } else {
-            medalIcon = const SizedBox.shrink(); // No icon for others
+            medalIcon = const SizedBox.shrink();
           }
 
           return Container(
-            // Highlight the current user with a light blue background
             color: isCurrentUser ? Colors.lightBlue[100] : Colors.transparent,
             child: ListTile(
               leading: CircleAvatar(
-                child: Text((index + 1).toString()), // Position number
+                child: Text((index + 1).toString()),
               ),
               title: Row(
                 children: [
-                  Text(player['name']), // Name first
-                  const SizedBox(width: 5), // Space between name and medal/icon
-                  medalIcon, // Medal icon if applicable
+                  Text(player['name']),
+                  const SizedBox(width: 5),
+                  medalIcon,
                 ],
               ),
               trailing: Row(
-                mainAxisSize: MainAxisSize.min, // Adjusts size to fit content
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('${player['score']}', style: TextStyle(fontSize: 15)), // Increased font size
-                  const Icon(Icons.favorite, color: Colors.red), // Heart icon
+                  Text('${player['score']}', style: TextStyle(fontSize: 15)),
+                  const Icon(Icons.favorite, color: Colors.red),
                 ],
               ),
             ),
