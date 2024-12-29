@@ -5,6 +5,7 @@ import 'package:lifepulse/states/timer.dart';
 import 'package:lifepulse/states/quests.dart';
 import 'package:lifepulse/states/leaderboard.dart';
 import 'package:lifepulse/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -29,11 +30,31 @@ class _MyHomePageState extends State<MyHomePage> {
     {'id': 9, 'name': 'User', 'score': 100},
     {'id': 10, 'name': 'Carla', 'score': 90},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserScore();
+  }
+
+  void _loadUserScore() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      leaderboardData[8]['score'] = prefs.getInt('userScore') ?? 100;
+    });
+  }
+
+  void _saveUserScore(int score) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userScore', score);
+  }
+
   void updateUserScore(int userId, int points) {
     setState(() {
       for (var player in leaderboardData) {
         if (player['id'] == userId) {
           player['score'] += points;
+          _saveUserScore(player['score']);
           break;
         }
       }
