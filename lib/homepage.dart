@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {'id': 6, 'name': 'Sofia', 'score': 130},
     {'id': 7, 'name': 'Miguel', 'score': 120},
     {'id': 8, 'name': 'Inês', 'score': 110},
-    {'id': 9, 'name': 'Pedro', 'score': 100},
+    {'id': 9, 'name': 'User', 'score': 100},
     {'id': 10, 'name': 'Carla', 'score': 90},
   ];
   void updateUserScore(int userId, int points) {
