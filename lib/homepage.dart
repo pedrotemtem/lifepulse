@@ -64,10 +64,20 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _addWorkoutDate() async {
+    final prefs = await SharedPreferences.getInstance();
+    DateTime now = DateTime.now();
+    List<String> workoutDates = prefs.getStringList('workoutDates') ?? [];
+    workoutDates.add(now.toIso8601String());
+    await prefs.setStringList('workoutDates', workoutDates);
+    setState(() {});
+  }
+
   static List<Widget> _widgetOptions(
       PageController pageController,
       List<Map<String, dynamic>> leaderboardData,
-      Function(int, int) updateUserScore) => <Widget>[
+      Function(int, int) updateUserScore,
+      Function addWorkoutDate) => <Widget>[
     const Notifications(),
     TrainingSelection(pageController: pageController),
     const Quests(),
@@ -76,9 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
         leaderboardData: leaderboardData,
         updateUserScore: updateUserScore
     ),
-    Timer(onTrainingComplete: (int points){
-      updateUserScore(9, points);
-    }),
+    Timer(
+      onTrainingComplete: (int points) {
+        updateUserScore(9, points);
+      },
+      onWorkoutComplete: addWorkoutDate,
+    ),
   ];
 
 
@@ -107,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: PageView(
           controller: _pageController,
-          children: _widgetOptions(_pageController, leaderboardData, updateUserScore),
+          children: _widgetOptions(_pageController, leaderboardData, updateUserScore, _addWorkoutDate),
           onPageChanged: (int index) {
             if (index < 3) {
               setState(() {
