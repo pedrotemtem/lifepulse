@@ -5,7 +5,7 @@ import 'package:lifepulse/splash_screen.dart';
 
 void main() {
   AwesomeNotifications().initialize(
-    "resource://drawable/noimage",
+    "resource://drawable/lifepulse_logo",
     [
       NotificationChannel(
         channelKey: "basic_channel",
