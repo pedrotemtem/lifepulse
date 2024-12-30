@@ -6,6 +6,7 @@ import 'package:lifepulse/states/quests.dart';
 import 'package:lifepulse/states/leaderboard.dart';
 import 'package:lifepulse/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -34,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    SharedPreferencesAndroid.registerWith();
     _loadUserScore();
   }
 
