@@ -13,6 +13,27 @@ class Quests extends StatefulWidget {
 class _QuestsState extends State<Quests> {
   List<String> workoutDates = [];
   int streakCountDays = 0;
+  final List<Map<String, dynamic>> _quests = [
+    // Streak group - increasing streak goals
+    {'title': '1-day streak', 'description': 'Complete the 30-minute timer 1 day!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30, 'completed': false},
+    {'title': '2-days streak', 'description': 'Complete the 30-minute timer 2 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40, 'completed': false},
+    {'title': '3-days streak', 'description': 'Complete the 30-minute timer 3 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50, 'completed': false},
+    {'title': '4-days streak', 'description': 'Complete the 30-minute timer 4 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60, 'completed': false},
+    {'title': '5-days streak', 'description': 'Complete the 30-minute timer 5 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70, 'completed': false},
+
+    // Friends group - increasing friends goals
+    {'title': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10, 'completed': false},
+    {'title': '4 Friends', 'description': 'Add 4 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20, 'completed': false},
+    {'title': '10 Friends', 'description': 'Add 10 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30, 'completed': false},
+    {'title': '15 Friends', 'description': 'Add 15 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 40, 'completed': false},
+    {'title': '20 Friends', 'description': 'Add 20 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 50, 'completed': false},
+
+    // Health group - New health-related quests
+    {'title': 'Hydration Goal', 'description': 'Drink 8 glasses of water every day for a week!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 20, 'completed': false},
+    {'title': 'Outdoor Exercise', 'description': 'Exercise outdoors for at least 30 minutes every day for a week.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 25, 'completed': false},
+    {'title': 'Mindfulness Meditation', 'description': 'Practice mindfulness meditation for 15 minutes every day for a week.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 30, 'completed': false},
+    {'title': 'Sleep Goal', 'description': 'Sleep at least 7 hours every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 35, 'completed': false},
+  ];
 
   @override
   void initState() {
@@ -29,6 +50,19 @@ class _QuestsState extends State<Quests> {
     });
   }
 
+  void _loadCompletedQuests() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      for (var quest in _quests) {
+        quest['completed'] = prefs.getBool(quest['title']) ?? false;
+      }
+    });
+  }
+
+  void _saveCompletedQuest(String title, bool completed) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(title, completed);
+  }
 
   List<DateTime> _getLast7Days() {
     DateTime now = DateTime.now();
@@ -106,7 +140,11 @@ class _QuestsState extends State<Quests> {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height - 350,
-              child: ExpansionTileExample(streakCountDays: streakCountDays),
+              child: ExpansionTileExample(
+                streakCountDays: streakCountDays,
+                saveCompletedQuest: _saveCompletedQuest,
+                quests: _quests,
+              ),
             ),
           ],
         ),
@@ -117,9 +155,13 @@ class _QuestsState extends State<Quests> {
 
 class ExpansionTileExample extends StatefulWidget {
   final int streakCountDays;
+  final Function(String, bool) saveCompletedQuest;
+  final List<Map<String, dynamic>> quests;
 
   const ExpansionTileExample({
     required this.streakCountDays,
+    required this.saveCompletedQuest,
+    required this.quests,
     super.key
   });
 
@@ -128,27 +170,6 @@ class ExpansionTileExample extends StatefulWidget {
 }
 
 class _ExpansionTileExampleState extends State<ExpansionTileExample> {
-  final List<Map<String, dynamic>> _quests = [
-    // Streak group - increasing streak goals
-    {'title': '1-day streak', 'description': 'Complete the 30-minute timer 1 day!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30},
-    {'title': '2-days streak', 'description': 'Complete the 30-minute timer 2 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 40},
-    {'title': '3-days streak', 'description': 'Complete the 30-minute timer 3 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 50},
-    {'title': '4-days streak', 'description': 'Complete the 30-minute timer 4 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 60},
-    {'title': '5-days streak', 'description': 'Complete the 30-minute timer 5 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 70},
-
-    // Friends group - increasing friends goals
-    {'title': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10},
-    {'title': '4 Friends', 'description': 'Add 4 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20},
-    {'title': '10 Friends', 'description': 'Add 10 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30},
-    {'title': '15 Friends', 'description': 'Add 15 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 40},
-    {'title': '20 Friends', 'description': 'Add 20 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 50},
-
-    // Health group - New health-related quests
-    {'title': 'Hydration Goal', 'description': 'Drink 8 glasses of water every day for a week!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 20},
-    {'title': 'Outdoor Exercise', 'description': 'Exercise outdoors for at least 30 minutes every day for a week.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 25},
-    {'title': 'Mindfulness Meditation', 'description': 'Practice mindfulness meditation for 15 minutes every day for a week.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 30},
-    {'title': 'Sleep Goal', 'description': 'Sleep at least 7 hours every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 35},
-  ];
 
   final Map<String, Color> _groupColors = {
     'Streak': Colors.lightGreenAccent,
@@ -165,7 +186,7 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
   }
 
   void _validateQuests() {
-    for (var quest in _quests) {
+    for (var quest in widget.quests) {
       assert(quest['title'] != null, 'Quest is missing title');
       assert(quest['group'] != null, 'Quest is missing group');
       assert(quest['hearts'] is int, 'Quest hearts should be an integer');
@@ -173,30 +194,38 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
     }
   }
 
-  bool _isQuestAutomaticallyCompleted(Map<String, dynamic> quest) {
-    try {
-      if (quest['group'] == 'Streak') {
-        int streakDays = int.parse(quest['title']!.split('-')[0].split(' ')[0]);
-        return widget.streakCountDays >= streakDays;
-      } else if (quest['group'] == 'Friends') {
-        int friendsRequired = int.parse(quest['title']!.split(' ')[0]);
-        return friendsCount >= friendsRequired;
+ bool _isQuestAutomaticallyCompleted(Map<String, dynamic> quest) {
+  try {
+    if (quest['group'] == 'Streak') {
+      int streakDays = int.parse(quest['title']!.split('-')[0].split(' ')[0]);
+      if (widget.streakCountDays >= streakDays) {
+        widget.saveCompletedQuest(quest['title'], true);
+        return true;
       }
-    } catch (e) {
-      debugPrint('Error in _isQuestAutomaticallyCompleted: $e');
+    } else if (quest['group'] == 'Friends') {
+      int friendsRequired = int.parse(quest['title']!.split(' ')[0]);
+      if (friendsCount >= friendsRequired) {
+        widget.saveCompletedQuest(quest['title'], true);
+        return true;
+      }
     }
-    return false;
+  } catch (e) {
+    debugPrint('Error in _isQuestAutomaticallyCompleted: $e');
   }
+  return false;
+}
 
   void _markAsDone(Map<String, dynamic> quest) {
     setState(() {
       quest['completed'] = true;
+      widget.saveCompletedQuest(quest['title'], true);
     });
   }
 
   void _undoMarkAsDone(Map<String, dynamic> quest) {
     setState(() {
       quest['completed'] = false;
+      widget.saveCompletedQuest(quest['title'], false);
     });
   }
 
@@ -253,7 +282,7 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
   @override
   Widget build(BuildContext context) {
     Map<String, List<Map<String, dynamic>>> groupedQuests = {};
-    for (var quest in _quests) {
+    for (var quest in widget.quests) {
       if (!groupedQuests.containsKey(quest['group'])) {
         groupedQuests[quest['group']] = [];
       }
