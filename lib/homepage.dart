@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Function addWorkoutDate) => <Widget>[
     const Notifications(),
     TrainingSelection(pageController: pageController),
-    const Quests(),
+    Quests(updateUserScore: updateUserScore),
     Leaderboard(
         currentUserId: 10,
         leaderboardData: leaderboardData,
