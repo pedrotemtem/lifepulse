@@ -5,6 +5,8 @@ import 'package:lifepulse/states/timer.dart';
 import 'package:lifepulse/states/quests.dart';
 import 'package:lifepulse/states/leaderboard.dart';
 import 'package:lifepulse/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -26,14 +28,35 @@ class _MyHomePageState extends State<MyHomePage> {
     {'id': 6, 'name': 'Sofia', 'score': 130},
     {'id': 7, 'name': 'Miguel', 'score': 120},
     {'id': 8, 'name': 'Inês', 'score': 110},
-    {'id': 9, 'name': 'Pedro', 'score': 100},
-    {'id': 10, 'name': 'Carla', 'score': 90},
+    {'id': 9, 'name': 'Carla', 'score': 90},
+    {'id': 10, 'name': 'User', 'score': 0},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferencesAndroid.registerWith();
+    _loadUserScore();
+  }
+
+  void _loadUserScore() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      leaderboardData[9]['score'] = prefs.getInt('userScore') ?? 0;
+    });
+  }
+
+  void _saveUserScore(int score) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userScore', score);
+  }
+
   void updateUserScore(int userId, int points) {
     setState(() {
       for (var player in leaderboardData) {
         if (player['id'] == userId) {
           player['score'] += points;
+          _saveUserScore(player['score']);
           break;
         }
       }
@@ -41,21 +64,34 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _addWorkoutDate() async {
+    final prefs = await SharedPreferences.getInstance();
+    DateTime now = DateTime.now();
+    List<String> workoutDates = prefs.getStringList('workoutDates') ?? [];
+    workoutDates.add(now.toIso8601String());
+    await prefs.setStringList('workoutDates', workoutDates);
+    setState(() {});
+  }
+
   static List<Widget> _widgetOptions(
       PageController pageController,
       List<Map<String, dynamic>> leaderboardData,
-      Function(int, int) updateUserScore) => <Widget>[
+      Function(int, int) updateUserScore,
+      Function addWorkoutDate) => <Widget>[
     const Notifications(),
     TrainingSelection(pageController: pageController),
-    const Quests(),
+    Quests(updateUserScore: updateUserScore),
     Leaderboard(
-        currentUserId: 9,
+        currentUserId: 10,
         leaderboardData: leaderboardData,
         updateUserScore: updateUserScore
     ),
-    Timer(onTrainingComplete: (int points){
-      updateUserScore(9, points);
-    }),
+    Timer(
+      onTrainingComplete: (int points) {
+        updateUserScore(10, points);
+      },
+      onWorkoutComplete: addWorkoutDate,
+    ),
   ];
 
 
@@ -84,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: PageView(
           controller: _pageController,
-          children: _widgetOptions(_pageController, leaderboardData, updateUserScore),
+          children: _widgetOptions(_pageController, leaderboardData, updateUserScore, _addWorkoutDate),
           onPageChanged: (int index) {
             if (index < 3) {
               setState(() {

@@ -20,6 +20,9 @@ class _LeaderboardState extends State<Leaderboard> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> sortedLeaderboardData = List.from(widget.leaderboardData);
+    sortedLeaderboardData.sort((a, b) => b['score'].compareTo(a['score']));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Leaderboard'),

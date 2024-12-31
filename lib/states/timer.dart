@@ -3,7 +3,12 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
 class Timer extends StatefulWidget {
   final Function(int) onTrainingComplete;
-  const Timer({required this.onTrainingComplete, super.key});
+  final Function onWorkoutComplete;
+  const Timer({
+    required this.onTrainingComplete,
+    required this.onWorkoutComplete,
+    super.key,
+  });
 
   @override
   _TimerState createState() => _TimerState();
@@ -100,6 +105,7 @@ class _TimerState extends State<Timer> {
               onPressed: () {
                 Navigator.of(context).pop();
                 widget.onTrainingComplete(30);
+                widget.onWorkoutComplete();
               },
             ),
           ],

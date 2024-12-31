@@ -29,6 +29,11 @@ android {
         versionName = flutter.versionName
     }
 
+    lintOptions {
+        abortOnError false
+        disable 'ProtectedPermissions'
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

@@ -12,21 +12,30 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/noimage.jpg'),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const MyHomePage()),
-                );
-              },
-              child: const Text('Start'),
-            ),
-          ],
+      body: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+          );
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/lifepulse_name.png',
+                width: 300,
+                height: 300,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                  'Tap anywhere to start',
+                  style: TextStyle(
+                      fontSize: 22,
+                  )
+              ),
+            ],
+          ),
         ),
       ),
     );

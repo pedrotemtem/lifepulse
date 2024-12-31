@@ -35,8 +35,8 @@ class _NotificationsState extends State<Notifications> {
         content: NotificationContent(
           id: weekday,
           channelKey: 'basic_channel',
-          title: 'Weekly Notification',
-          body: 'This is your weekly notification',
+          title: 'Daily Reminder',
+          body: 'Do not forget to do your daily workout!',
         ),
         schedule: NotificationCalendar(
           weekday: weekday,
