@@ -28,8 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
     {'id': 6, 'name': 'Sofia', 'score': 130},
     {'id': 7, 'name': 'Miguel', 'score': 120},
     {'id': 8, 'name': 'Inês', 'score': 110},
-    {'id': 9, 'name': 'User', 'score': 100},
-    {'id': 10, 'name': 'Carla', 'score': 90},
+    {'id': 9, 'name': 'Carla', 'score': 90},
+    {'id': 10, 'name': 'User', 'score': 0},
   ];
 
   @override
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _loadUserScore() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      leaderboardData[8]['score'] = prefs.getInt('userScore') ?? 100;
+      leaderboardData[9]['score'] = prefs.getInt('userScore') ?? 0;
     });
   }
 
@@ -82,13 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
     TrainingSelection(pageController: pageController),
     const Quests(),
     Leaderboard(
-        currentUserId: 9,
+        currentUserId: 10,
         leaderboardData: leaderboardData,
         updateUserScore: updateUserScore
     ),
     Timer(
       onTrainingComplete: (int points) {
-        updateUserScore(9, points);
+        updateUserScore(10, points);
       },
       onWorkoutComplete: addWorkoutDate,
     ),
