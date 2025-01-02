@@ -59,7 +59,7 @@ class _NotificationsState extends State<Notifications> {
 
   void _showScheduledNotifications() async {
     List<NotificationModel> scheduledNotifications =
-    await AwesomeNotifications().listScheduledNotifications();
+        await AwesomeNotifications().listScheduledNotifications();
 
     showDialog(
       context: context,
@@ -180,7 +180,26 @@ class _NotificationsState extends State<Notifications> {
                     minimumSize: const Size(320, 50),
                   ),
                   onPressed: () {
-                    scheduleWeeklyNotification(_selectedTime.hour, _selectedTime.minute, _selectedWeekdays);
+                    scheduleWeeklyNotification(_selectedTime.hour,
+                        _selectedTime.minute, _selectedWeekdays);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Notification Set'),
+                          content: const Text(
+                              'Your notification has been successfully set.'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: const Text('Set Notifications'),
                 ),
@@ -193,7 +212,27 @@ class _NotificationsState extends State<Notifications> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  onPressed: cancelAllNotifications,
+                  onPressed: () {
+                    cancelAllNotifications();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Notifications Disabled'),
+                          content: const Text(
+                              'Your notifications have been successfully disabled.'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                   child: const Text('Disable Notifications'),
                 ),
               ],
@@ -265,8 +304,8 @@ class WeekdaySelector extends StatefulWidget {
 
   const WeekdaySelector(
       {required this.onChanged,
-        required this.initialSelectedWeekdays,
-        super.key});
+      required this.initialSelectedWeekdays,
+      super.key});
 
   @override
   _WeekdaySelectorState createState() => _WeekdaySelectorState();
@@ -302,7 +341,8 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
             alignment: WrapAlignment.center,
             spacing: 18.0,
             children: List.generate(4, (index) {
-              String weekday = DateFormat.E().format(DateTime(2021, 1, index + 4));
+              String weekday =
+                  DateFormat.E().format(DateTime(2021, 1, index + 4));
               return FilterChip(
                 label: Text(
                   weekday,
@@ -313,7 +353,8 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 selected: _selectedWeekdays.contains(index + 1),
-                onSelected: (selected) => _onWeekdaySelected(selected, index + 1),
+                onSelected: (selected) =>
+                    _onWeekdaySelected(selected, index + 1),
               );
             }),
           ),
@@ -322,7 +363,8 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
             alignment: WrapAlignment.center,
             spacing: 18.0,
             children: List.generate(3, (index) {
-              String weekday = DateFormat.E().format(DateTime(2021, 1, index + 8));
+              String weekday =
+                  DateFormat.E().format(DateTime(2021, 1, index + 8));
               return FilterChip(
                 label: Text(
                   weekday,
@@ -333,7 +375,8 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 selected: _selectedWeekdays.contains(index + 5),
-                onSelected: (selected) => _onWeekdaySelected(selected, index + 5),
+                onSelected: (selected) =>
+                    _onWeekdaySelected(selected, index + 5),
               );
             }),
           ),
