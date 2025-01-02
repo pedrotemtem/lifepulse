@@ -25,7 +25,7 @@ class _LeaderboardState extends State<Leaderboard> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Leaderboard'),
+        title: const Text('Classificação'),
       ),
       body: ListView.builder(
         itemCount: widget.leaderboardData.length,

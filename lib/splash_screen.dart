@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               const SizedBox(height: 20),
               const Text(
-                  'Tap anywhere to start',
+                  'Clique para continuar',
                   style: TextStyle(
                       fontSize: 22,
                   )

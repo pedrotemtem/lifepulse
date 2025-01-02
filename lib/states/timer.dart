@@ -56,7 +56,7 @@ class _TimerState extends State<Timer> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
-              'Congratulations!',
+              'Parabéns!',
               style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold
@@ -66,13 +66,13 @@ class _TimerState extends State<Timer> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'You have completed today\'s training!',
+                'Você completou o treino de hoje!',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18.0),
               ),
               SizedBox(height: 10),
               Text(
-                'You have gained:',
+                'Ganhou:',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18.0),
               ),
@@ -119,18 +119,18 @@ class _TimerState extends State<Timer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Stop Workout?'),
+          title: const Text('Parar treino?'),
             content: const Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Are you sure you want to stop the training?',
+                  'Você tem certeza que deseja parar o treino?',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18.0),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'You will not gain any hearts!',
+                  'Você não ganhará nenhum coração!',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18.0),
                 ),
@@ -138,14 +138,14 @@ class _TimerState extends State<Timer> {
             ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: const Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _controller.resume();
               },
             ),
             TextButton(
-              child: const Text('Stop'),
+              child: const Text('Parar'),
               onPressed: () {
                 resetTimer();
                 Navigator.of(context).pop();
@@ -166,7 +166,7 @@ class _TimerState extends State<Timer> {
           color: Colors.lightBlue[200],
           padding: const EdgeInsets.all(16.0),
           child: const Text(
-            'Train Alone',
+            'Treinar Sozinho',
             style: TextStyle(
               fontSize: 24.0,
               color: Colors.white,
@@ -206,10 +206,10 @@ class _TimerState extends State<Timer> {
                     isTimerTextShown: true,
                     autoStart: false,
                     onStart: () {
-                      print('Countdown Started');
+                      print('Contagem Regressiva Iniciada');
                     },
                     onComplete: () {
-                      print('Countdown Ended');
+                      print('Contagem Regressiva Parada');
                       _showCompletionDialog();
                     },
                   ),
@@ -247,7 +247,7 @@ class _TimerState extends State<Timer> {
               },
               label:
                 Text(
-                  'Stop training',
+                  'Parar Treino',
                   style: TextStyle(
                       fontSize: 28,
                       color: Colors.grey[800]!,

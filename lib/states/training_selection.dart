@@ -16,7 +16,7 @@ class TrainingSelection extends StatelessWidget {
               pageController.jumpToPage(4);
             },
             icon: const Icon(Icons.person, size: 40),
-            label: const Text('Train Alone'),
+            label: const Text('Treinar Sozinho'),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(300, 60),
               textStyle: const TextStyle(fontSize: 20),
@@ -31,7 +31,7 @@ class TrainingSelection extends StatelessWidget {
               textStyle: const TextStyle(fontSize: 20),
             ),
             icon: const Icon(Icons.group, size: 40),
-            label: const Text('Train Together'),
+            label: const Text('Treinar em Grupo'),
           ),
         ],
       ),

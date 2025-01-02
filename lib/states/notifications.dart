@@ -35,8 +35,8 @@ class _NotificationsState extends State<Notifications> {
         content: NotificationContent(
           id: weekday,
           channelKey: 'basic_channel',
-          title: 'Daily Reminder',
-          body: 'Do not forget to do your daily workout!',
+          title: 'Lembrete Diário',
+          body: 'Não se esqueça de fazer o seu treino diário!',
         ),
         schedule: NotificationCalendar(
           weekday: weekday,
@@ -57,7 +57,7 @@ class _NotificationsState extends State<Notifications> {
     });
   }
 
-  void _showScheduledNotifications() async {
+  /*void _showScheduledNotifications() async {
     List<NotificationModel> scheduledNotifications =
         await AwesomeNotifications().listScheduledNotifications();
 
@@ -65,7 +65,7 @@ class _NotificationsState extends State<Notifications> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Scheduled Notifications'),
+          title: const Text('Notificações Agendadas'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -89,7 +89,7 @@ class _NotificationsState extends State<Notifications> {
         );
       },
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,7 @@ class _NotificationsState extends State<Notifications> {
                     child: Column(
                       children: [
                         const Text(
-                          'Set your daily reminder time',
+                          'Defina o horário do seu lembrete diário',
                           style: TextStyle(fontSize: 20.0),
                         ),
                         const SizedBox(height: 5),
@@ -186,9 +186,9 @@ class _NotificationsState extends State<Notifications> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Notification Set'),
+                          title: const Text('Notificações Definidas'),
                           content: const Text(
-                              'Your notification has been successfully set.'),
+                              'As notificações foram definidas com sucesso.'),
                           actions: <Widget>[
                             TextButton(
                               child: const Text('OK'),
@@ -201,7 +201,7 @@ class _NotificationsState extends State<Notifications> {
                       },
                     );
                   },
-                  child: const Text('Set Notifications'),
+                  child: const Text('Definir Notificações'),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -218,9 +218,9 @@ class _NotificationsState extends State<Notifications> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Notifications Disabled'),
-                          content: const Text(
-                              'Your notifications have been successfully disabled.'),
+                          title: const Text('Notificações Desativadas'),
+                         content: const Text(
+                            'As notificações foram desativadas com sucesso.'),
                           actions: <Widget>[
                             TextButton(
                               child: const Text('OK'),
@@ -233,7 +233,7 @@ class _NotificationsState extends State<Notifications> {
                       },
                     );
                   },
-                  child: const Text('Disable Notifications'),
+                  child: const Text('Destativar Notificações'),
                 ),
               ],
             ),
@@ -290,7 +290,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
-          'Selected time: ${_selectedTime.format(context)}',
+          'Horário Selecionado: ${_selectedTime.format(context)}',
           style: const TextStyle(fontSize: 18.0),
         ),
       ),

@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {'id': 7, 'name': 'Miguel', 'score': 120},
     {'id': 8, 'name': 'Inês', 'score': 110},
     {'id': 9, 'name': 'Carla', 'score': 90},
-    {'id': 10, 'name': 'User', 'score': 0},
+    {'id': 10, 'name': 'Eu', 'score': 0},
   ];
 
   @override
@@ -133,19 +133,19 @@ class _MyHomePageState extends State<MyHomePage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
-              label: 'Notifications',
+              label: 'Notificações',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.timer),
-              label: 'Timer',
+              label: 'Treino',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
-              label: 'Quests',
+              label: 'Missões',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.leaderboard),
-              label: 'Leaderboard',
+              label: 'Classificação',
             ),
           ],
           currentIndex: _selectedIndex,

@@ -19,26 +19,26 @@ class _QuestsState extends State<Quests> {
   int streakCountDays = 0;
   final List<Map<String, dynamic>> _quests = [
     // Streak group - increasing streak goals
-    {'title': '1-day streak', 'description': 'Complete the 30-minute timer 1 day!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 5, 'completed': false},
-    {'title': '2-days streak', 'description': 'Complete the 30-minute timer 2 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 10, 'completed': false},
-    {'title': '3-days streak', 'description': 'Complete the 30-minute timer 3 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 15, 'completed': false},
-    {'title': '4-days streak', 'description': 'Complete the 30-minute timer 4 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 20, 'completed': false},
-    {'title': '5-days streak', 'description': 'Complete the 30-minute timer 5 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 25, 'completed': false},
-    {'title': '6-days streak', 'description': 'Complete the 30-minute timer 6 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30, 'completed': false},
-    {'title': '7-days streak', 'description': 'Complete the 30-minute timer 7 days in a row!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 35, 'completed': false},
+    {'title': '1 dia de sequência', 'description': 'Complete o cronômetro de 30 minutos por 1 dia!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 5, 'completed': false},
+    {'title': '2 dias de sequência', 'description': 'Complete o cronômetro de 30 minutos por 2 dias seguidos!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 10, 'completed': false},
+    {'title': '3 dias de sequência', 'description': 'Complete o cronômetro de 30 minutos por 3 dias seguidos!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 15, 'completed': false},
+    {'title': '4 dias de sequência', 'description': 'Complete o cronômetro de 30 minutos por 4 dias seguidos!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 20, 'completed': false},
+    {'title': '5 dias de sequência', 'description': 'Complete o cronômetro de 30 minutos por 5 dias seguidos!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 25, 'completed': false},
+    {'title': '6 dias de sequência', 'description': 'Complete o cronômetro de 30 minutos por 6 dias seguidos!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 30, 'completed': false},
+    {'title': '7 dias de sequência', 'description': 'Complete o cronômetro de 30 minutos por 7 dias seguidos!', 'icon': Icons.timer, 'group': 'Streak', 'hearts': 35, 'completed': false},
 
     // Friends group - increasing friends goals
-    {'title': '1 Friend', 'description': 'Add your first friend to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 5, 'completed': false},
-    {'title': '4 Friends', 'description': 'Add 4 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10, 'completed': false},
-    {'title': '10 Friends', 'description': 'Add 10 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20, 'completed': false},
-    {'title': '15 Friends', 'description': 'Add 15 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 25, 'completed': false},
-    {'title': '20 Friends', 'description': 'Add 20 friends to the app!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30, 'completed': false},
+    {'title': '1 Amigo', 'description': 'Adicine o seu primeiro amigo!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 5, 'completed': false},
+    {'title': '4 Amigos', 'description': 'Adicione 2 amigos!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 10, 'completed': false},
+    {'title': '10 Amigos', 'description': 'Adicione 10 amigos!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 20, 'completed': false},
+    {'title': '15 Amigos', 'description': 'Adicione 15 amigos!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 25, 'completed': false},
+    {'title': '20 Amigos', 'description': 'Adicione 20 amigos!', 'icon': Icons.group, 'group': 'Friends', 'hearts': 30, 'completed': false},
 
     // Health group - New health-related quests
-    {'title': 'Hydration Goal', 'description': 'Drink 8 glasses of water every day for a week!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 5, 'completed': false},
-    {'title': 'Outdoor Exercise', 'description': 'Exercise outdoors for at least 30 minutes every day for a week.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 10, 'completed': false},
-    {'title': 'Mindfulness Meditation', 'description': 'Practice mindfulness meditation for 15 minutes every day for a week.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 15, 'completed': false},
-    {'title': 'Sleep Goal', 'description': 'Sleep at least 7 hours every night for a week.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 20, 'completed': false},
+    {'title': 'Meta de Hidratação', 'description': 'Beba 8 copos de água todos os dias durante uma semana!', 'icon': Icons.local_drink, 'group': 'Health', 'hearts': 5, 'completed': false},
+    {'title': 'Exercício ao Ar Livre', 'description': 'Exercite-se ao ar livre por pelo menos 30 minutos durante uma semana.', 'icon': Icons.directions_run, 'group': 'Health', 'hearts': 10, 'completed': false},
+    {'title': 'Meditação Mindfulness', 'description': 'Pratique meditação mindfulness por 15 minutos durante uma semana.', 'icon': Icons.spa, 'group': 'Health', 'hearts': 15, 'completed': false},
+    {'title': 'Meta de Sono', 'description': 'Durma pelo menos 7 horas todas as noites durante uma semana.', 'icon': Icons.bedtime, 'group': 'Health', 'hearts': 20, 'completed': false},
   ];
 
   @override
@@ -103,7 +103,7 @@ class _QuestsState extends State<Quests> {
   }
 
   String _getDayName(int weekday) {
-    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const dayNames = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
     return dayNames[weekday - 1];
   }
 
@@ -117,7 +117,7 @@ class _QuestsState extends State<Quests> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Text(
-              "Last 7 days performance:",
+              "Performance dos últimos 7 dias:",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Row(
@@ -212,7 +212,7 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
       }
 
       if (quest['group'] == 'Streak') {
-        int streakDays = int.parse(quest['title']!.split('-')[0].split(' ')[0]);
+        int streakDays = int.parse(quest['title']!.split(' ')[0]);
         if (widget.streakCountDays >= streakDays) {
           setState(() {
             quest['completed'] = true;
@@ -256,12 +256,12 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Confirm Completion"),
-        content: const Text("Are you sure you want to mark this quest as completed?"),
+        title: const Text("Confirmar conclusão"),
+        content: const Text("Você tem certeza que deseja marcar esta tarefa como concluída?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text("No"),
+            child: const Text("Não"),
           ),
           Container(
             decoration: BoxDecoration(
@@ -279,7 +279,7 @@ class _ExpansionTileExampleState extends State<ExpansionTileExample> {
                 });
               },
               child: const Text(
-                "Yes",
+                "Sim",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
